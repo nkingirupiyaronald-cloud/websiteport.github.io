@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ronald Rupiya Nkingi — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:     #0d0d0d;
+    --paper:   #f5f2eb;
+    --cream:   #ede8dd;
+    --accent:  #c84b2f;
+    --accent2: #2d6a4f;
+    --mid:     #6b6560;
+    --rule:    #ccc7be;
+    --card:    #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: .55;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(245,242,235,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.05rem; letter-spacing: -.02em;
+    color: var(--ink); text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex; gap: 2.2rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--mid); text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+    padding: 0 3rem; gap: 4rem;
+    padding-top: 5rem;
+  }
+
+  .hero-text { max-width: 560px; }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.4rem;
+    display: flex; align-items: center; gap: .7rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: inline-block; width: 2.5rem; height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: clamp(2.8rem, 5vw, 4.6rem);
+    line-height: 1.0; letter-spacing: -.04em;
+    color: var(--ink); margin-bottom: 1.5rem;
+  }
+  h1 em {
+    font-style: italic; font-family: 'Libre Baskerville', serif;
+    color: var(--accent);
+  }
+
+  .hero-bio {
+    font-size: 1.05rem; color: var(--mid);
+    max-width: 460px; margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: .73rem; letter-spacing: .1em; text-transform: uppercase;
+    padding: .75rem 1.8rem;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: all .25s;
+    display: inline-block;
+  }
+  .btn-primary {
+    background: var(--ink); color: var(--paper);
+  }
+  .btn-primary:hover { background: var(--accent); }
+
+  .btn-outline {
+    background: transparent; color: var(--ink);
+    border: 1.5px solid var(--ink);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* hero right — skills visual */
+  .hero-visual {
+    position: relative; display: flex; flex-direction: column; gap: 1rem;
+    padding: 2rem;
+  }
+
+  .skill-bar-group { display: flex; flex-direction: column; gap: .75rem; }
+
+  .skill-row {
+    display: grid; grid-template-columns: 100px 1fr 3rem;
+    align-items: center; gap: 1rem;
+  }
+  .skill-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--mid);
+  }
+  .skill-track {
+    height: 4px; background: var(--rule); position: relative; overflow: hidden;
+  }
+  .skill-fill {
+    position: absolute; top: 0; left: 0; height: 100%;
+    background: var(--ink);
+    transform: scaleX(0); transform-origin: left;
+    animation: fillBar 1.2s ease forwards;
+    animation-delay: var(--delay, 0s);
+  }
+  @keyframes fillBar { to { transform: scaleX(1); } }
+
+  .skill-pct {
+    font-family: 'DM Mono', monospace;
+    font-size: .68rem; color: var(--mid); text-align: right;
+  }
+
+  .hero-divider {
+    width: 1px; height: 140px;
+    background: linear-gradient(to bottom, transparent, var(--rule), transparent);
+    position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  }
+
+  .tools-row {
+    display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem;
+  }
+  .tool-chip {
+    font-family: 'DM Mono', monospace; font-size: .65rem;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: .35rem .8rem;
+    background: var(--cream); color: var(--ink);
+    border: 1px solid var(--rule);
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 6rem 3rem; }
+  section + section { border-top: 1px solid var(--rule); }
+
+  .section-header {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem; letter-spacing: .15em; color: var(--accent);
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: clamp(1.6rem, 3vw, 2.4rem);
+    letter-spacing: -.03em; color: var(--ink);
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2px;
+  }
+
+  .project-card {
+    background: var(--card);
+    padding: 2.5rem;
+    border: 1px solid var(--rule);
+    position: relative; overflow: hidden;
+    transition: transform .25s, box-shadow .25s;
+    text-decoration: none; color: inherit; display: block;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; width: 3px; height: 0;
+    background: var(--accent);
+    transition: height .3s ease;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.09); }
+  .project-card:hover::before { height: 100%; }
+
+  .card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: .62rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 1.25rem; letter-spacing: -.02em;
+    margin-bottom: .8rem; color: var(--ink);
+  }
+  .card-desc {
+    font-size: .9rem; color: var(--mid); line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+  .card-chips {
+    display: flex; flex-wrap: wrap; gap: .4rem;
+  }
+  .card-chip {
+    font-family: 'DM Mono', monospace; font-size: .6rem;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: .2rem .6rem;
+    background: var(--cream); color: var(--mid);
+    border: 1px solid var(--rule);
+  }
+  .card-arrow {
+    position: absolute; bottom: 2rem; right: 2rem;
+    font-size: 1.2rem; color: var(--rule);
+    transition: color .25s, transform .25s;
+  }
+  .project-card:hover .card-arrow { color: var(--accent); transform: translate(3px,-3px); }
+
+  /* ── CARD IMAGE PREVIEW ── */
+  .card-img {
+    width: calc(100% + 5rem); margin: -2.5rem -2.5rem 2rem -2.5rem;
+    height: 190px; overflow: hidden; position: relative;
+  }
+  .card-img img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top left;
+    display: block;
+    filter: grayscale(20%) contrast(1.04);
+    transition: transform .45s ease, filter .3s ease;
+  }
+  .project-card:hover .card-img img {
+    transform: scale(1.04);
+    filter: grayscale(0%) contrast(1.06);
+  }
+  .card-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 55%, rgba(255,255,255,.95) 100%);
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start;
+  }
+  .about-left { position: sticky; top: 7rem; }
+  .about-name {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 3.5rem; line-height: 1; letter-spacing: -.05em;
+    color: var(--ink); margin-bottom: 1rem;
+  }
+  .about-title-text {
+    font-family: 'DM Mono', monospace; font-size: .75rem;
+    letter-spacing: .15em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+  .about-social {
+    display: flex; flex-direction: column; gap: .6rem; margin-top: 2rem;
+  }
+  .about-social a {
+    font-family: 'DM Mono', monospace; font-size: .7rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--mid); text-decoration: none;
+    display: flex; align-items: center; gap: .6rem;
+    transition: color .2s;
+  }
+  .about-social a::before {
+    content: '→'; font-size: .75rem; color: var(--accent);
+  }
+  .about-social a:hover { color: var(--ink); }
+
+  .about-right p {
+    margin-bottom: 1.3rem; color: var(--mid); font-size: 1rem;
+  }
+  .about-right p:first-child {
+    font-size: 1.15rem; color: var(--ink);
+    font-style: italic;
+  }
+
+  .highlights {
+    margin-top: 2.5rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .highlight-item {
+    padding: 1.4rem;
+    border: 1px solid var(--rule); background: var(--cream);
+  }
+  .highlight-num {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 2rem; color: var(--ink); letter-spacing: -.04em;
+  }
+  .highlight-label {
+    font-family: 'DM Mono', monospace; font-size: .65rem;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--mid);
+  }
+
+  /* ── CONTACT ── */
+  .contact-inner {
+    max-width: 680px;
+  }
+  .contact-desc {
+    font-size: 1.1rem; color: var(--mid);
+    margin-bottom: 2.5rem;
+  }
+  .contact-email {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+    letter-spacing: -.03em; color: var(--ink);
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: .2rem;
+    display: inline-block;
+    transition: color .2s;
+  }
+  .contact-email:hover { color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-copy {
+    font-family: 'DM Mono', monospace; font-size: .65rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--mid);
+  }
+  .footer-back {
+    font-family: 'DM Mono', monospace; font-size: .65rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--mid);
+    text-decoration: none; transition: color .2s;
+  }
+  .footer-back:hover { color: var(--accent); }
+
+  /* ── FADE-IN ── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 3rem; }
+    .hero-visual { padding: 0; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-left { position: static; }
+    section { padding: 4rem 1.5rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: .8rem; text-align: center; }
+    .highlights { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    h1 { font-size: 2.4rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Ronald<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://www.linkedin.com/in/ronald-rupiya-nkingi-393998240/" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-text fade-in">
+    <div class="hero-tag">Data Analyst · Insight Specialist</div>
+    <h1>Turning raw<br>data into <em>clear<br>decisions.</em></h1>
+    <p class="hero-bio">
+      I work with SQL, Python, Tableau, and Excel to clean messy datasets,
+      surface meaningful trends, and build dashboards that help teams act with confidence.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#projects">View my work</a>
+      <a class="btn btn-outline" href="https://www.linkedin.com/in/ronald-rupiya-nkingi-393998240/" target="_blank">Connect on LinkedIn</a>
+    </div>
+  </div>
+
+  <div class="hero-visual fade-in" style="animation-delay:.2s">
+    <div class="hero-divider"></div>
+    <div class="skill-bar-group">
+      <div class="skill-row">
+        <span class="skill-label">SQL</span>
+        <div class="skill-track"><div class="skill-fill" style="width:90%;--delay:.4s"></div></div>
+        <span class="skill-pct">90%</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">Python</span>
+        <div class="skill-track"><div class="skill-fill" style="width:82%;--delay:.55s"></div></div>
+        <span class="skill-pct">82%</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">Tableau</span>
+        <div class="skill-track"><div class="skill-fill" style="width:88%;--delay:.7s"></div></div>
+        <span class="skill-pct">88%</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">Excel</span>
+        <div class="skill-track"><div class="skill-fill" style="width:85%;--delay:.85s"></div></div>
+        <span class="skill-pct">85%</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">Statistics</span>
+        <div class="skill-track"><div class="skill-fill" style="width:78%;--delay:1s"></div></div>
+        <span class="skill-pct">78%</span>
+      </div>
+    </div>
+    <div class="tools-row">
+      <span class="tool-chip">SQL Server</span>
+      <span class="tool-chip">PostgreSQL</span>
+      <span class="tool-chip">Pandas</span>
+      <span class="tool-chip">Tableau Public</span>
+      <span class="tool-chip">Power BI</span>
+      <span class="tool-chip">Excel / PivotTables</span>
+      <span class="tool-chip">Data Cleaning</span>
+      <span class="tool-chip">ETL</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header fade-in">
+    <span class="section-num">01</span>
+    <h2>Selected Work</h2>
+  </div>
+
+  <div class="projects-grid">
+
+    <a class="project-card fade-in" href="https://github.com/nkingirupiyaronald-cloud/againEX/blob/main/data%20cleaning" target="_blank">
+      <div class="card-img">
+        <svg width="100%" height="190" viewBox="0 0 600 190" xmlns="http://www.w3.org/2000/svg" style="display:block">
+          <rect width="600" height="190" fill="#1e1e2e"/>
+          <!-- window chrome -->
+          <rect width="600" height="26" fill="#13131f"/>
+          <circle cx="14" cy="13" r="4.5" fill="#ff5f57"/><circle cx="28" cy="13" r="4.5" fill="#febc2e"/><circle cx="42" cy="13" r="4.5" fill="#28c840"/>
+          <text x="200" y="17.5" font-family="monospace" font-size="9" fill="#666" text-anchor="middle">data cleaning.sql — SQL Server Management Studio</text>
+          <!-- line numbers -->
+          <rect x="0" y="26" width="32" height="164" fill="#16162a"/>
+          <text x="16" y="46" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">1</text>
+          <text x="16" y="59" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">2</text>
+          <text x="16" y="72" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">3</text>
+          <text x="16" y="85" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">4</text>
+          <text x="16" y="98" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">5</text>
+          <text x="16" y="111" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">6</text>
+          <text x="16" y="124" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">7</text>
+          <text x="16" y="137" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">8</text>
+          <text x="16" y="150" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">9</text>
+          <text x="16" y="163" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">10</text>
+          <!-- code -->
+          <text x="42" y="46" font-family="monospace" font-size="9.5" fill="#6272a4">-- Standardize Date Format</text>
+          <text x="42" y="59" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">ALTER TABLE </tspan><tspan fill="#f8f8f2">NashvilleHousing</tspan></text>
+          <text x="42" y="72" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">ADD </tspan><tspan fill="#8be9fd">SaleDateConverted</tspan><tspan fill="#ffb86c"> Date</tspan><tspan fill="#f8f8f2">;</tspan></text>
+          <text x="42" y="85" font-family="monospace" font-size="9.5" fill="#6272a4">-- Populate missing Property Addresses</text>
+          <text x="42" y="98" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">UPDATE </tspan><tspan fill="#f8f8f2">a </tspan><tspan fill="#ff79c6">SET </tspan><tspan fill="#8be9fd">PropertyAddress</tspan><tspan fill="#f8f8f2"> =</tspan></text>
+          <text x="42" y="111" font-family="monospace" font-size="9.5"><tspan fill="#50fa7b">  ISNULL</tspan><tspan fill="#f8f8f2">(a.PropertyAddress, b.PropertyAddress)</tspan></text>
+          <text x="42" y="124" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">FROM </tspan><tspan fill="#f8f8f2">NashvilleHousing a </tspan><tspan fill="#ff79c6">JOIN </tspan><tspan fill="#f8f8f2">NashvilleHousing b</tspan></text>
+          <text x="42" y="137" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">  ON </tspan><tspan fill="#f8f8f2">a.ParcelID = b.ParcelID</tspan></text>
+          <text x="42" y="150" font-family="monospace" font-size="9.5" fill="#6272a4">-- Remove Duplicates via ROW_NUMBER() CTE</text>
+          <text x="42" y="163" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">WITH </tspan><tspan fill="#8be9fd">RowNumCTE </tspan><tspan fill="#ff79c6">AS </tspan><tspan fill="#f8f8f2">(</tspan><tspan fill="#ff79c6"> SELECT </tspan><tspan fill="#f8f8f2">*,</tspan></text>
+        </svg>
+        <div class="card-img-overlay" style="background:linear-gradient(to bottom,transparent 50%,rgba(255,255,255,.97) 100%)"></div>
+      </div>
+      <div class="card-tag">SQL · Data Engineering</div>
+      <div class="card-title">Nashville Housing — Data Cleaning in SQL</div>
+      <p class="card-desc">
+        Cleaned a Nashville real-estate dataset in SQL Server across five stages: standardising sale date 
+        formats, backfilling null property addresses via a self-join on <code style="font-family:'DM Mono',monospace;font-size:.82em;background:var(--cream);padding:.1em .35em">ParcelID</code>, 
+        splitting combined address strings into separate city/state columns using <code style="font-family:'DM Mono',monospace;font-size:.82em;background:var(--cream);padding:.1em .35em">SUBSTRING</code> and 
+        <code style="font-family:'DM Mono',monospace;font-size:.82em;background:var(--cream);padding:.1em .35em">PARSENAME</code>, 
+        standardising boolean flags (Y/N → Yes/No), and removing duplicate rows with a 
+        <code style="font-family:'DM Mono',monospace;font-size:.82em;background:var(--cream);padding:.1em .35em">ROW_NUMBER()</code> CTE before dropping redundant columns.
+      </p>
+      <div class="card-chips">
+        <span class="card-chip">SQL Server</span>
+        <span class="card-chip">CTEs</span>
+        <span class="card-chip">Self-Joins</span>
+        <span class="card-chip">PARSENAME</span>
+        <span class="card-chip">Data Quality</span>
+      </div>
+      <span class="card-arrow">↗</span>
+    </a>
+
+    <a class="project-card fade-in" href="https://github.com/nkingirupiyaronald-cloud/againEX/blob/main/data%20exploration" target="_blank" style="transition-delay:.08s">
+      <div class="card-img">
+        <svg width="100%" height="190" viewBox="0 0 600 190" xmlns="http://www.w3.org/2000/svg" style="display:block">
+          <rect width="600" height="190" fill="#1e1e2e"/>
+          <rect width="600" height="26" fill="#13131f"/>
+          <circle cx="14" cy="13" r="4.5" fill="#ff5f57"/><circle cx="28" cy="13" r="4.5" fill="#febc2e"/><circle cx="42" cy="13" r="4.5" fill="#28c840"/>
+          <text x="200" y="17.5" font-family="monospace" font-size="9" fill="#666" text-anchor="middle">data exploration.sql — SQL Server Management Studio</text>
+          <rect x="0" y="26" width="32" height="164" fill="#16162a"/>
+          <text x="16" y="46" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">1</text>
+          <text x="16" y="59" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">2</text>
+          <text x="16" y="72" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">3</text>
+          <text x="16" y="85" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">4</text>
+          <text x="16" y="98" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">5</text>
+          <text x="16" y="111" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">6</text>
+          <text x="16" y="124" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">7</text>
+          <text x="16" y="137" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">8</text>
+          <text x="16" y="150" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">9</text>
+          <text x="16" y="163" font-family="monospace" font-size="8.5" fill="#444" text-anchor="middle">10</text>
+          <text x="42" y="46" font-family="monospace" font-size="9.5" fill="#6272a4">-- Total Cases vs Total Deaths (Death %)</text>
+          <text x="42" y="59" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">SELECT </tspan><tspan fill="#f8f8f2">Location, date, total_cases, total_deaths,</tspan></text>
+          <text x="42" y="72" font-family="monospace" font-size="9.5"><tspan fill="#f8f8f2">  (total_deaths/total_cases)*</tspan><tspan fill="#ffb86c">100</tspan><tspan fill="#ff79c6"> AS </tspan><tspan fill="#8be9fd">DeathPercentage</tspan></text>
+          <text x="42" y="85" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">FROM </tspan><tspan fill="#f8f8f2">PortfolioProject..CovidDeaths</tspan></text>
+          <text x="42" y="98" font-family="monospace" font-size="9.5" fill="#6272a4">-- Rolling Vaccination Count (Window Function)</text>
+          <text x="42" y="111" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">SELECT </tspan><tspan fill="#f8f8f2">dea.location, dea.date, vac.new_vaccinations,</tspan></text>
+          <text x="42" y="124" font-family="monospace" font-size="9.5"><tspan fill="#50fa7b">  SUM</tspan><tspan fill="#f8f8f2">(</tspan><tspan fill="#50fa7b">CONVERT</tspan><tspan fill="#f8f8f2">(int, vac.new_vaccinations))</tspan></text>
+          <text x="42" y="137" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">  OVER </tspan><tspan fill="#f8f8f2">(</tspan><tspan fill="#ff79c6">PARTITION BY </tspan><tspan fill="#f8f8f2">dea.Location</tspan></text>
+          <text x="42" y="150" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">        ORDER BY </tspan><tspan fill="#f8f8f2">dea.Date) </tspan><tspan fill="#ff79c6">AS </tspan><tspan fill="#8be9fd">RollingVaccinated</tspan></text>
+          <text x="42" y="163" font-family="monospace" font-size="9.5"><tspan fill="#ff79c6">FROM </tspan><tspan fill="#f8f8f2">CovidDeaths dea </tspan><tspan fill="#ff79c6">JOIN </tspan><tspan fill="#f8f8f2">CovidVaccinations vac ...</tspan></text>
+        </svg>
+        <div class="card-img-overlay" style="background:linear-gradient(to bottom,transparent 50%,rgba(255,255,255,.97) 100%)"></div>
+      </div>
+      <div class="card-tag">SQL · Exploratory Analysis</div>
+      <div class="card-title">Covid-19 Global Data Exploration</div>
+      <p class="card-desc">
+        Explored a global Covid-19 dataset across deaths and vaccinations tables, calculating death 
+        rates per case, infection rates as a share of population, and a rolling vaccination count 
+        using <code style="font-family:'DM Mono',monospace;font-size:.82em;background:var(--cream);padding:.1em .35em">SUM() OVER(PARTITION BY)</code>. 
+        Demonstrated CTEs, temp tables, joins across two datasets, and created a 
+        <code style="font-family:'DM Mono',monospace;font-size:.82em;background:var(--cream);padding:.1em .35em">PercentPopulationVaccinated</code> view for downstream visualisation.
+      </p>
+      <div class="card-chips">
+        <span class="card-chip">SQL Server</span>
+        <span class="card-chip">Window Functions</span>
+        <span class="card-chip">CTEs</span>
+        <span class="card-chip">Temp Tables</span>
+        <span class="card-chip">Views</span>
+        <span class="card-chip">Joins</span>
+      </div>
+      <span class="card-arrow">↗</span>
+    </a>
+
+    <a class="project-card fade-in" href="https://public.tableau.com/app/profile/ronald.nkingi/viz/BritishAirwaysReviewsdata/Dashboard2" target="_blank" style="transition-delay:.16s">
+      <div class="card-img">
+        <svg width="100%" height="190" viewBox="0 0 600 190" xmlns="http://www.w3.org/2000/svg" style="display:block">
+          <rect width="600" height="190" fill="#f5f5f5"/>
+          <!-- top bar -->
+          <rect width="600" height="28" fill="#2b6cb0"/>
+          <text x="12" y="18" font-family="sans-serif" font-size="10" fill="white" font-weight="bold">British Airways — Customer Reviews Dashboard</text>
+          <rect x="480" y="6" width="55" height="16" rx="2" fill="rgba(255,255,255,.2)"/>
+          <text x="507" y="17.5" font-family="sans-serif" font-size="8" fill="white" text-anchor="middle">Filters ▾</text>
+          <!-- sidebar filters -->
+          <rect x="0" y="28" width="110" height="162" fill="#e8eef5"/>
+          <text x="8" y="44" font-family="sans-serif" font-size="7.5" fill="#2b6cb0" font-weight="bold">METRIC</text>
+          <rect x="8" y="48" width="94" height="13" rx="2" fill="#2b6cb0"/>
+          <text x="55" y="57.5" font-family="sans-serif" font-size="7" fill="white" text-anchor="middle">Overall Rating</text>
+          <text x="8" y="74" font-family="sans-serif" font-size="7" fill="#555">Cabin Staff Service</text>
+          <text x="8" y="86" font-family="sans-serif" font-size="7" fill="#555">Entertainment</text>
+          <text x="8" y="98" font-family="sans-serif" font-size="7" fill="#555">Food &amp; Beverages</text>
+          <text x="8" y="110" font-family="sans-serif" font-size="7" fill="#555">Seat Comfort</text>
+          <text x="8" y="122" font-family="sans-serif" font-size="7" fill="#555">Value for Money</text>
+          <line x1="8" y1="130" x2="102" y2="130" stroke="#ccc" stroke-width="1"/>
+          <text x="8" y="143" font-family="sans-serif" font-size="7.5" fill="#2b6cb0" font-weight="bold">TRAVELLER</text>
+          <text x="8" y="156" font-family="sans-serif" font-size="7" fill="#555">Business / Leisure</text>
+          <text x="8" y="168" font-family="sans-serif" font-size="7.5" fill="#2b6cb0" font-weight="bold">SEAT CLASS</text>
+          <text x="8" y="181" font-family="sans-serif" font-size="7" fill="#555">Economy / Business</text>
+          <!-- KPI tiles -->
+          <rect x="118" y="34" width="72" height="40" rx="3" fill="white" stroke="#ddd" stroke-width="1"/>
+          <text x="154" y="50" font-family="sans-serif" font-size="16" fill="#2b6cb0" font-weight="bold" text-anchor="middle">4.2</text>
+          <text x="154" y="65" font-family="sans-serif" font-size="6.5" fill="#888" text-anchor="middle">Avg Rating</text>
+          <rect x="198" y="34" width="72" height="40" rx="3" fill="white" stroke="#ddd" stroke-width="1"/>
+          <text x="234" y="50" font-family="sans-serif" font-size="16" fill="#e67e22" font-weight="bold" text-anchor="middle">3.1</text>
+          <text x="234" y="65" font-family="sans-serif" font-size="6.5" fill="#888" text-anchor="middle">Entertainment</text>
+          <rect x="278" y="34" width="72" height="40" rx="3" fill="white" stroke="#ddd" stroke-width="1"/>
+          <text x="314" y="50" font-family="sans-serif" font-size="16" fill="#27ae60" font-weight="bold" text-anchor="middle">4.5</text>
+          <text x="314" y="65" font-family="sans-serif" font-size="6.5" fill="#888" text-anchor="middle">Cabin Staff</text>
+          <rect x="358" y="34" width="72" height="40" rx="3" fill="white" stroke="#ddd" stroke-width="1"/>
+          <text x="394" y="50" font-family="sans-serif" font-size="16" fill="#c0392b" font-weight="bold" text-anchor="middle">2.8</text>
+          <text x="394" y="65" font-family="sans-serif" font-size="6.5" fill="#888" text-anchor="middle">Food</text>
+          <!-- bar chart — avg by aircraft -->
+          <rect x="118" y="84" width="250" height="98" rx="3" fill="white" stroke="#ddd" stroke-width="1"/>
+          <text x="127" y="96" font-family="sans-serif" font-size="7.5" fill="#333" font-weight="bold">Avg Rating by Aircraft</text>
+          <!-- bars -->
+          <rect x="135" y="103" width="140" height="9" rx="2" fill="#2b6cb0"/>
+          <text x="130" y="111" font-family="sans-serif" font-size="6.5" fill="#555" text-anchor="end">A380</text>
+          <text x="278" y="111" font-family="sans-serif" font-size="6.5" fill="#555">4.4</text>
+          <rect x="135" y="116" width="110" height="9" rx="2" fill="#3182ce"/>
+          <text x="130" y="124" font-family="sans-serif" font-size="6.5" fill="#555" text-anchor="end">B777</text>
+          <text x="248" y="124" font-family="sans-serif" font-size="6.5" fill="#555">3.9</text>
+          <rect x="135" y="129" width="95" height="9" rx="2" fill="#63b3ed"/>
+          <text x="130" y="137" font-family="sans-serif" font-size="6.5" fill="#555" text-anchor="end">A320</text>
+          <text x="233" y="137" font-family="sans-serif" font-size="6.5" fill="#555">3.4</text>
+          <rect x="135" y="142" width="82" height="9" rx="2" fill="#90cdf4"/>
+          <text x="130" y="150" font-family="sans-serif" font-size="6.5" fill="#555" text-anchor="end">B787</text>
+          <text x="220" y="150" font-family="sans-serif" font-size="6.5" fill="#555">3.1</text>
+          <rect x="135" y="155" width="60" height="9" rx="2" fill="#bee3f8"/>
+          <text x="130" y="163" font-family="sans-serif" font-size="6.5" fill="#555" text-anchor="end">A319</text>
+          <text x="198" y="163" font-family="sans-serif" font-size="6.5" fill="#555">2.6</text>
+          <!-- line chart — trend over time -->
+          <rect x="376" y="84" width="216" height="98" rx="3" fill="white" stroke="#ddd" stroke-width="1"/>
+          <text x="385" y="96" font-family="sans-serif" font-size="7.5" fill="#333" font-weight="bold">Rating Trend by Month</text>
+          <polyline points="390,155 410,145 430,150 450,138 470,142 480,130 495,135 510,125 525,128 545,120 565,115 580,118" fill="none" stroke="#2b6cb0" stroke-width="2" stroke-linejoin="round"/>
+          <polyline points="390,165 410,162 430,158 450,163 470,155 480,160 495,152 510,158 525,150 545,155 565,148 580,145" fill="none" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="3,2" stroke-linejoin="round"/>
+          <text x="385" y="178" font-family="sans-serif" font-size="6" fill="#2b6cb0">— Overall</text>
+          <text x="425" y="178" font-family="sans-serif" font-size="6" fill="#e67e22">- - Entertainment</text>
+        </svg>
+        <div class="card-img-overlay" style="background:linear-gradient(to bottom,transparent 45%,rgba(255,255,255,.97) 100%)"></div>
+      </div>
+      <div class="card-tag">Tableau · Dashboard</div>
+      <div class="card-title">British Airways Customer Review Dashboard</div>
+      <p class="card-desc">
+        Built an interactive Tableau dashboard analysing British Airways passenger reviews, 
+        enabling users to filter by metric (cabin staff, entertainment, food, seat comfort, 
+        value for money) and explore average ratings broken down by aircraft type, 
+        traveller category, seat class, and month — surfacing where and when service quality dips.
+      </p>
+      <div class="card-chips">
+        <span class="card-chip">Tableau Public</span>
+        <span class="card-chip">Filters &amp; Parameters</span>
+        <span class="card-chip">Customer Analytics</span>
+        <span class="card-chip">Trend Analysis</span>
+      </div>
+      <span class="card-arrow">↗</span>
+    </a>
+
+    <!-- Placeholder card to invite more work -->
+    <div class="project-card fade-in" style="transition-delay:.24s; background: var(--cream); cursor: default;">
+      <div class="card-tag">Coming Soon</div>
+      <div class="card-title">Python Analytics Project</div>
+      <p class="card-desc">
+        A Python-based analysis project using Pandas and Matplotlib to explore and visualise
+        a real-world dataset — currently in progress.
+      </p>
+      <div class="card-chips">
+        <span class="card-chip">Python</span>
+        <span class="card-chip">Pandas</span>
+        <span class="card-chip">Matplotlib</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header fade-in">
+    <span class="section-num">02</span>
+    <h2>About Ronald</h2>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-left fade-in">
+      <div class="about-name">Ronald<br>Rupiya<br>Nkingi</div>
+      <div class="about-title-text">Data Analyst</div>
+      <div class="about-social">
+        <a href="https://www.linkedin.com/in/ronald-rupiya-nkingi-393998240/" target="_blank">LinkedIn Profile</a>
+        <a href="https://github.com/nkingirupiyaronald-cloud" target="_blank">GitHub Repository</a>
+        <a href="https://public.tableau.com/app/profile/ronald.nkingi" target="_blank">Tableau Public</a>
+      </div>
+    </div>
+
+    <div class="about-right fade-in">
+      <p>
+        I'm a data analyst with a strong foundation in turning raw data into clear, 
+        actionable insights that drive smarter business decisions.
+      </p>
+      <p>
+        My work spans the full analytics pipeline — from writing complex SQL queries and 
+        cleaning messy datasets, to building polished Tableau dashboards and 
+        automating reporting workflows in Python and Excel.
+      </p>
+      <p>
+        I believe good analysis isn't just technically sound — it needs to tell a story.
+        Every chart, table, and query I produce is designed with the end audience in mind:
+        making complexity accessible without losing nuance.
+      </p>
+      <p>
+        I'm currently building my project portfolio and open to opportunities in
+        business intelligence, data analytics, and reporting roles.
+      </p>
+
+      <div class="highlights">
+        <div class="highlight-item">
+          <div class="highlight-num">3+</div>
+          <div class="highlight-label">Portfolio Projects</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">4</div>
+          <div class="highlight-label">Core Tools</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">SQL</div>
+          <div class="highlight-label">Primary Language</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">BI</div>
+          <div class="highlight-label">Focus Area</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header fade-in">
+    <span class="section-num">03</span>
+    <h2>Get in touch</h2>
+  </div>
+  <div class="contact-inner fade-in">
+    <p class="contact-desc">
+      Open to full-time roles, freelance analytics projects, and collaborations.
+      The best way to reach me is on LinkedIn or via email.
+    </p>
+    <a class="contact-email" href="https://www.linkedin.com/in/ronald-rupiya-nkingi-393998240/" target="_blank">
+      Connect on LinkedIn →
+    </a>
+    <div style="margin-top:2.5rem;">
+      <a class="btn btn-primary" href="https://github.com/nkingirupiyaronald-cloud" target="_blank">View GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2025 Ronald Rupiya Nkingi · Data Analyst</span>
+  <a class="footer-back" href="#home">Back to top ↑</a>
+</footer>
+
+<script>
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
